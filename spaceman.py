@@ -28,7 +28,6 @@ def is_word_guessed(secret_word, letters_guessed):
         bool: True only if all the letters of secret_word are in letters_guessed, False otherwise
     '''
     # TODO: Loop through the letters in the secret_word and check if a letter is not in lettersGuessed
-    pass
     # Iterates through each letter
     for letter in secret_word:
         # Check whether letter is in letter_guessed
@@ -37,6 +36,8 @@ def is_word_guessed(secret_word, letters_guessed):
             return False
     # If all letters from secret_word were guessed, return True
     return True
+
+    pass
 
 def get_guessed_word(secret_word, letters_guessed):
     '''
@@ -49,23 +50,21 @@ def get_guessed_word(secret_word, letters_guessed):
     Returns: 
         string: letters and underscores.  For letters in the word that the user has guessed correctly, the string should contain the letter at the correct position.  For letters in the word that the user has not yet guessed, shown an _ (underscore) instead.
     '''
-
     #TODO: Loop through the letters in secret word and build a string that shows the letters that have been guessed correctly so far that are saved in letters_guessed and underscores for the letters that have not been guessed yet
     guessed_word = ""
+    # Iterates through each letter
     for letter in secret_word:
+        # Check whether letter is in letter_guessed
         if letter in letters_guessed:
+            # If letters is guessed, adds the letter to guessed_word
             guessed_word += letter
         else:
+            # If letters is not guessed, adds "_"to guessed_word
             guessed_word += "_"
+    # Returns updated value to guess_word
     return guessed_word
 
     pass
-
-    
-
-
-
-
 
 def is_guess_in_word(guess, secret_word):
     '''
@@ -81,6 +80,7 @@ def is_guess_in_word(guess, secret_word):
     '''
     #TODO: check if the letter guess is in the secret word
     return guess in secret_word
+
     pass
 
 
@@ -94,30 +94,52 @@ def spaceman(secret_word):
       secret_word (string): the secret word to guess.
 
     '''
-    letters_guessed = []
-    attempts = 7  # Number of attempts allowed
-
-
     #TODO: show the player information about the game according to the project spec
     print("Welcome to Spaceman!")
-    print("Spaceman is a word-guessing game in which you must guess the secret word.")
-    print("You only get so many chances to guess the word.")
-    print("You lose an attempt every time you guess a letter that isn't in the word.")
-    print("Let's see if you can figure out the word before you run out of attempts!")
-
-    
+    print("The secret word contains: ", len(secret_word), "letters.")
+    print("You have 7 incorrect guesses, please enter one letter per round")
+    print("-------------------------------------------------------------------------")
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
+    letters_guessed = []  # Empty list
+    attempts = 7  # Number of attempts allowed
 
-    #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-
-    #TODO: show the guessed word so far
+    while attempts > 0:
+        guess = input("Enter a letter: ").lower() 
+        # validate input is a single alphabetic character
+        if len(guess) != 1 or not guess.isalpha():
+            print("Please enter one letter at a time.")
+            continue
+        
+        # add the guessed letter to letters_guessed
+        letters_guessed.append(guess)
+        
+        #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+        #TODO: show the guessed word so far
+        if is_guess_in_word(guess, secret_word):
+            print("Your guess appears in the word!")
+        else:
+            print("Sorry your guess was not in the word, try again")
+            # decrement by one from the attempts of letter guessed 
+            attempts -= 1
+            print("You have", attempts, "incorrect guess left.")
+        
+        # show the current state of the guessed word
+        current_state = get_guessed_word(secret_word, letters_guessed)
+        print("Guessed word so far:", current_state)
+        # display the remaining letters that have not yet been guessed
+        remaining_letters = [letter for letter in 'abcdefghijklmnopqrstuvwxyz' if letter not in letters_guessed]
+        print("These letters haven't been guessed yet:", ' '.join(remaining_letters))
+        print("----------------------------------------------------------------------")
 
     #TODO: check if the game has been won or lost
+        if is_word_guessed(secret_word, letters_guessed):
+            print("You won!")
+            break
 
-
-
-
+    if attempts == 0:
+        print("Sorry you didn't win, try again!")
+        print("The word was:", secret_word)
 
 
 #These function calls that will start the game
