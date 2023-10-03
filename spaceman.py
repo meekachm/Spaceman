@@ -111,6 +111,11 @@ def spaceman(secret_word):
             print("Please enter one letter at a time.")
             continue
         
+        # Check and alert user if they guessed a letter they already guessed
+        if guess in letters_guessed:
+            print("You already guessed this letter. Try a different one.")
+            continue
+
         # add the guessed letter to letters_guessed
         letters_guessed.append(guess)
         
@@ -140,8 +145,16 @@ def spaceman(secret_word):
     if attempts == 0:
         print("Sorry you didn't win, try again!")
         print("The word was:", secret_word)
+        
+    
+    # Ask the player if they want to play again
+    play_response = input("Would you like to play again? (yes/no): ").lower()
+    if play_response == "yes":
+        secret_word = load_word()
+        spaceman(secret_word)
 
 
-#These function calls that will start the game
+
+# function calls to start game
 secret_word = load_word()
 spaceman(secret_word)
