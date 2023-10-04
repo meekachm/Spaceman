@@ -97,13 +97,16 @@ def spaceman(secret_word):
     #TODO: show the player information about the game according to the project spec
     print("Welcome to Spaceman!")
     print("The secret word contains: ", len(secret_word), "letters.")
-    print("You have 7 incorrect guesses, please enter one letter per round")
+    # print("You have 7 incorrect guesses, please enter one letter per round")
+    print(f"You have {len(secret_word)} incorrect guesses, please enter one letter per round")
     print("-------------------------------------------------------------------------")
 
     #TODO: Ask the player to guess one letter per round and check that it is only one letter
     letters_guessed = []  # Empty list
-    attempts = 7  # Number of attempts allowed
-
+    # attempts = 7  # Number of attempts 
+    attempts = len(secret_word)  # Number of attempts allowed match the length of the mystery word
+    current_state = "_" * len(secret_word)
+    
     while attempts > 0:
         guess = input("Enter a letter: ").lower() 
         # validate input is a single alphabetic character
@@ -144,7 +147,7 @@ def spaceman(secret_word):
 
     if attempts == 0:
         print("Sorry you didn't win, try again!")
-        print("The word was:", secret_word)
+        print("The word was:", secret_word) # Show the user the mystery word when they lose
         
     
     # Ask the player if they want to play again
@@ -154,7 +157,6 @@ def spaceman(secret_word):
         spaceman(secret_word)
 
 
-
 # function calls to start game
 secret_word = load_word()
-spaceman(secret_word)
+spaceman(secret_word) 
